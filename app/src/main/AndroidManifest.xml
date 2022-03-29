@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting_App">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
