@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting_App">
         <activity
+            android:name=".BudgetActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity

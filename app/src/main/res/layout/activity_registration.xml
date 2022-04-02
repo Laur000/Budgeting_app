@@ -7,8 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_margin="20dp"
-    tools:context=".LoginActivity">
-
+    tools:context=".RegistrationActivity">
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -34,19 +33,23 @@
         android:layout_margin="5dp"
         android:inputType="textPassword"
         android:textColorHint="#000"/>
+    <EditText
+        android:id="@+id/passwordConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm password"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:layout_margin="5dp"
+        android:inputType="textPassword"
+        android:textColorHint="#000"/>
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/regBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textAllCaps="false"
-        android:text="Login"/>
+        android:text="Sign Up"/>
 
-    <TextView
-        android:id="@+id/loginQn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Don't have an account, Sign Up"
-        android:gravity="center"/>
 
 </LinearLayout>

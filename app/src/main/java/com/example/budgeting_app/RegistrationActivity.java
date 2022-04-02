@@ -18,42 +18,36 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
 
-    private EditText email, password;
-    private Button loginBtn;
-    private TextView loginQn;
+    private EditText email, password, passwordConfirm;
+    private Button regBtn;
 
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        loginBtn = findViewById(R.id.loginBtn);
-        loginQn = findViewById(R.id.loginQn);
+        setContentView(R.layout.activity_registration);
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
 
-        loginQn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this ,RegistrationActivity.class);
-                startActivity(intent);
-            }
-        });
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        regBtn = findViewById(R.id.regBtn);
+        passwordConfirm = findViewById(R.id.passwordConfirm);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        //lasam momentan ca butonul de sign in sa te duca pe login, dar trebuie sa intre direct in aplicatie dupa
+        regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String emailString = email.getText().toString();
                 String passwordString = password.getText().toString();
+                String passwordConfirmString = passwordConfirm.getText().toString();
+
 
                 if(TextUtils.isEmpty(emailString)){
                     email.setError("Email is required");
@@ -61,30 +55,39 @@ public class LoginActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(passwordString)){
                     password.setError("Password is required");
                 }
+
+                if(TextUtils.isEmpty(passwordConfirmString)){
+                    passwordConfirm.setError("Confirm your password");
+                }
+
                 else{
-                    progressDialog.setMessage("login in progress");
+                    if(passwordString.equals(passwordConfirmString)){
+                    progressDialog.setMessage("registration in progress");
                     progressDialog.setCanceledOnTouchOutside(false);  //touch outside and cancel
                     progressDialog.show();
 
-                    mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);  //from Login to MainActivity
+                                //aici pot accesa uid-ul
+                                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);  //from Login to MainActivity
                                 startActivity(intent);
                                 finish();
                                 progressDialog.dismiss();
                             }else{
-                                Toast.makeText(LoginActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
                         }
                     });
+                    //adauga in firestore database datele despre cont
                 }
-
-
+                    else{
+                        passwordConfirm.setError("You added a different password");
+                    }
+            }
             }
         });
-
     }
 }
