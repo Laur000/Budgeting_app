@@ -17,6 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
+    private FirebaseFirestore db ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +39,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
+        db = FirebaseFirestore.getInstance();
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         regBtn = findViewById(R.id.regBtn);
         passwordConfirm = findViewById(R.id.passwordConfirm);
 
-        //lasam momentan ca butonul de sign in sa te duca pe login, dar trebuie sa intre direct in aplicatie dupa
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +72,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     progressDialog.setCanceledOnTouchOutside(false);  //touch outside and cancel
                     progressDialog.show();
 
+                    //create data for email
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("email", emailString);
+
+
                     mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -75,13 +86,16 @@ public class RegistrationActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                                 progressDialog.dismiss();
+
+                                //adaug Uid si Email in db
+                                db.collection("Users").document(mAuth.getCurrentUser().getUid()).set(data,SetOptions.merge());
                             }else{
                                 Toast.makeText(RegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
                         }
                     });
-                    //adauga in firestore database datele despre cont
+
                 }
                     else{
                         passwordConfirm.setError("You added a different password");

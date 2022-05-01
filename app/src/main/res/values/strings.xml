@@ -6,13 +6,15 @@
         <item>Transport</item>
         <item>Food</item>
         <item>House</item>
-        <item>Select item</item>
-        <item>Transport</item>
-        <item>Food</item>
-        <item>House</item>
-        <item>Select item</item>
-        <item>Transport</item>
-        <item>Food</item>
-        <item>House</item>
+        <item>Entertainment</item>
+        <item>Education</item>
+        <item>Eating out</item>
+        <item>Health</item>
+        <item>Gifts</item>
+        <item>Sports</item>
+        <item>Car</item>
+        <item>Pets</item>
+        <item>Clothes</item>
+        <item>Bills</item>
     </string-array>
 </resources>
