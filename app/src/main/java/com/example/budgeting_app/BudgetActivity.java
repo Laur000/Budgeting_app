@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,6 +62,7 @@ import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -76,8 +79,13 @@ public class BudgetActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ProgressDialog loader;
-
     private FirebaseFirestore budgetRef ;
+
+    private String post_key = "";
+    private String item = "";
+    private float amount = 0 ;
+    private String details = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,23 +121,67 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void updateTotal(String dateID, int amount) {
-
+    private void createTotal(String dateID){
+        Map<String, Object> data = new HashMap<>();
+        data.put("total", 0);
 
         budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
-                .update("total", FieldValue.increment(amount)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .set(data, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d("TOTAL CREATED SUCCES", "task created scuccesfully");
+            }
+        });
+
+
+
+    }
+
+    private void updateTotal(String dateID) {
+
+
+       /* budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
+                .update("total", amount).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Log.d("TOTAL UPDATE SUCCES", "DocumentSnapshot successfully written!");
             }
-        });
-        /*budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        });*/
+
+
+        final float[] total = {0};
+        budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
+                .collection("Items")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+
+                        if(error!=null){
+                            Log.e("Firebase Error" , error.getMessage());
+                            return;
+                        }
+
+                         if (documentSnapshot != null && !documentSnapshot.getDocuments().isEmpty()) {
+
+                            List<DocumentSnapshot> documents = documentSnapshot.getDocuments();
+
+                            for (DocumentSnapshot item : documents) {
+
+                                total[0] = total[0] +   Float.valueOf(item.get("amount").toString()) ;
+                            }
+
+
+                            budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
+                                    .update("total",  total[0]).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.d("TOTAL UPDATE SUCCES", "DocumentSnapshot successfully written!");
+                                }
+                            });
+                        }
 
                     }
-                });*/
+                });
 
     }
 
@@ -158,7 +210,7 @@ public class BudgetActivity extends AppCompatActivity {
                 String budgetItem = itemSpinner.getSelectedItem().toString();
 
                 String budgetDetails = details.getText().toString();
-                String dateID ;
+
                 //checks
                 if(TextUtils.isEmpty(budgetDetails)){
                     budgetDetails = "no details";
@@ -181,7 +233,7 @@ public class BudgetActivity extends AppCompatActivity {
                     DateFormat dateFormatID = new SimpleDateFormat("MM-yyyy");
                     Calendar cal = Calendar.getInstance();
                     String date = dateFormat.format(cal.getTime());
-                    dateID = dateFormatID.format(cal.getTime());
+                    String dateID = dateFormatID.format(cal.getTime());
 
 
                     MutableDateTime epoch = new MutableDateTime();
@@ -190,9 +242,7 @@ public class BudgetActivity extends AppCompatActivity {
                     Months months =  Months.monthsBetween(epoch, now);
 
                     //add item
-                    Data data = new Data(date, budgetDetails, Integer.parseInt(budgetAmount), months.getMonths(), budgetItem);
-
-                    // Data data = new Data(budgetItem,date, null, Integer.parseInt(budgetAmount), months.getMonths());
+                    Data data = new Data(date, budgetDetails, Float.parseFloat(budgetAmount), months.getMonths(), budgetItem);
 
                    // budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).set(city); adaug email, il iau din field de login/register
 
@@ -204,7 +254,7 @@ public class BudgetActivity extends AppCompatActivity {
                        public void onComplete(@NonNull Task<Void> task) {
                            if(task.isSuccessful()){
                                Toast.makeText(BudgetActivity.this, "Budget item added successfully", Toast.LENGTH_SHORT).show();
-                               updateTotal(dateID,Integer.parseInt(budgetAmount));
+                               updateTotal(dateID);
                            }else{
 
                                Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
@@ -258,21 +308,27 @@ public class BudgetActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.d(" DETAILS", documentSnapshot.toString());
-                if (documentSnapshot != null && !documentSnapshot.getDocuments().isEmpty()) {
+
+                if(documentSnapshot.getDocuments().isEmpty()){
+                        createTotal(dateID);
+                }
+                 else if (documentSnapshot != null && !documentSnapshot.getDocuments().isEmpty()) {
+
 
                     List<DocumentSnapshot> documents = documentSnapshot.getDocuments();
                     ArrayList<Data> dataArrayList = new ArrayList<Data>();
+                    ArrayList<String> mUserKey = new ArrayList<String>();
 
                     for (DocumentSnapshot item : documents) {
                         dataArrayList.add(item.toObject(Data.class));
-
-                     /*   Log.d("DataShow AMOUNT", item.get("amount").toString());
+                        mUserKey.add(item.getId());
+                        /*   Log.d("DataShow AMOUNT", item.get("amount").toString());
                         Log.d("DataShow DATE",  item.get("category").toString());*/
 
 
                     }
-                    MyAdaptor myAdaptor = new MyAdaptor(BudgetActivity.this,dataArrayList);
+
+                    MyAdaptor myAdaptor = new MyAdaptor(BudgetActivity.this,dataArrayList, mUserKey);
                     myAdaptor.notifyDataSetChanged();
                     recyclerView.setAdapter(myAdaptor);
                 }
@@ -290,8 +346,10 @@ public class BudgetActivity extends AppCompatActivity {
                         }
 
                         if (value != null && value.exists()) {
+                            float totalShow = Float.valueOf(value.get("total").toString());
 
-                            String sTotal = String.valueOf("Total spend: " + value.get("total").toString());
+
+                            String sTotal = String.valueOf("Total spend: " + String.format("%.2f",totalShow));
                             totalBudgetAmountTextView.setText(sTotal);
                         } else {
                             Log.d("TOTAL SPEND: null", "TOTAL SPEND: null");
@@ -334,11 +392,14 @@ public class BudgetActivity extends AppCompatActivity {
 
             Context context;
             ArrayList<Data> dataArrayList;
+            ArrayList<String>  mUserKey;
 
-        public MyAdaptor(Context context, ArrayList<Data> dataArrayList) {
+        public MyAdaptor(Context context, ArrayList<Data> dataArrayList ,ArrayList<String>  mUserKey) {
             this.context = context;
             this.dataArrayList = dataArrayList;
+            this.mUserKey = mUserKey;
         }
+
 
         @NonNull
             @Override
@@ -349,8 +410,8 @@ public class BudgetActivity extends AppCompatActivity {
 
         }
 
-            @Override
-            public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        @Override
+        public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
             Data data = dataArrayList.get(position);
 
             holder.setItemName("Item: " + data.getCategory());
@@ -400,6 +461,17 @@ public class BudgetActivity extends AppCompatActivity {
                     holder.imageView.setImageResource(R.drawable.ic_other); //TO DO ICON
                     break;
             }
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    post_key = mUserKey.get(position);
+                    item = data.getCategory();
+                    amount = data.getAmount();
+                    details = data.getDetails();
+                    updateData();
+
+                }
+            });
 
 
         }
@@ -446,6 +518,99 @@ public class BudgetActivity extends AppCompatActivity {
 
     }
 
+    private void updateData(){
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View mView = inflater.inflate(R.layout.update_layout, null);
+
+        myDialog.setView(mView);
+        final AlertDialog dialog = myDialog.create();
+
+        final  TextView mItem = mView.findViewById(R.id.itemName);
+        final EditText mAmount = mView.findViewById(R.id.amount);
+        final EditText mNotes = mView.findViewById(R.id.note);
+
+
+        mItem.setText(item);
+
+        mAmount.setText(String.valueOf(amount));
+        mAmount.setSelection(String.valueOf(amount).length());
+
+        mNotes.setText(String.valueOf(details));
+        mNotes.setSelection(String.valueOf(details).length());
+
+        Button delBut = mView.findViewById(R.id.btnDelete);
+        Button btnUpdate = mView.findViewById(R.id.btnUpdate);
+
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormatID = new SimpleDateFormat("MM-yyyy");
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime());
+        String dateID = dateFormatID.format(cal.getTime());
+
+
+        MutableDateTime epoch = new MutableDateTime();
+        epoch.setDate(0);
+        DateTime now = new DateTime();
+        Months months =  Months.monthsBetween(epoch, now);
+
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                amount = Float.parseFloat(mAmount.getText().toString());
+                details =  mNotes.getText().toString();
+
+
+
+                //add item
+                Data data = new Data(date, details, amount, months.getMonths(), item);
+
+                budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
+                        .collection("Items").document(post_key)
+                        .set(data, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(BudgetActivity.this, "Budget item updated successfully", Toast.LENGTH_SHORT).show();
+                            updateTotal(dateID);
+                        }else{
+
+                            Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+
+
+        delBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
+                        .collection("Items").document(post_key)
+                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(BudgetActivity.this, "Budget item deleted successfully", Toast.LENGTH_SHORT).show();
+                            updateTotal(dateID);
+                        }else{
+                            Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+}
 
 
 

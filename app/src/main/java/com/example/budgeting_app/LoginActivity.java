@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private TextView loginQn;
 
+    private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
 
@@ -32,7 +34,23 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+//comment this for logind mereu
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = mAuth.getCurrentUser();
 
+                if(user !=null){
+                    {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);  //from Login to MainActivity
+                        startActivity(intent);
+                        finish();
+
+                    }
+                }
+            }
+        };
+//----------------------
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         loginBtn = findViewById(R.id.loginBtn);
@@ -86,5 +104,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+//comment this for logind mereu
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mAuth.addAuthStateListener(authStateListener);
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        mAuth.removeAuthStateListener(authStateListener);
     }
 }

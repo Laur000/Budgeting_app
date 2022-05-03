@@ -4,7 +4,8 @@ package com.example.budgeting_app;
 
 public class Data {
     String date, details, category;
-    int amount, month;
+    int month;
+    float amount;
 
 
     public Data(){
@@ -12,7 +13,7 @@ public class Data {
 
     }
 
-    public Data(String date, String details, int amount, int month, String category) {
+    public Data(String date, String details, float amount, int month, String category) {
 
         this.date = date;
         this.details = details;
@@ -54,11 +55,11 @@ public class Data {
         this.month = month;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
