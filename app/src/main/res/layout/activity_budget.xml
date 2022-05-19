@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".BudgetActivity">
+    tools:context=".BudgetActivity"
+    android:background="@drawable/bgimage2"
+    >
 
 
 
 <androidx.appcompat.widget.Toolbar
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:background="#000"
+    android:background="#678a6a"
 android:id="@+id/toolbar"
 android:elevation="4dp"
 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -46,8 +48,8 @@ app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:layout_gravity="bottom|end"
             app:fabSize="normal"
             android:id="@+id/fab"
-            app:backgroundTint="#000"
-            android:src="@drawable/ic_add"
+            app:backgroundTint="#678a6a"
+            android:src="@drawable/plus"
             android:layout_margin="16dp"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

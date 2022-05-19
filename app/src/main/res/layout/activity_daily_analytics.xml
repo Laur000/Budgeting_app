@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bgimage2"
     tools:context=".DailyAnalyticsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/settingsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000"
+        android:background="#678a6a"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
@@ -50,7 +51,7 @@
             android:layout_height="18dp"
             android:layout_weight="1"
             android:layout_marginTop="5dp"
-            android:src="@drawable/brown"/>
+            android:src="@drawable/yellow"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -144,12 +145,16 @@
                         android:textColor="#000"
                         android:textSize="12sp"/>
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_transport"
-                    android:layout_margin="10dp"
-                    android:layout_toEndOf="@+id/linearLayoutTransport"/>
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toEndOf="@+id/linearLayoutTransport"
+                    android:src="@drawable/ic_transport" />
             </RelativeLayout>
 
 

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#808080"
+    android:background="#887ab7"
     tools:context=".ChooseAnalyticActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000"
+        android:background="#678a6a"
         android:id="@+id/toolbar"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -30,7 +30,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
         app:cardElevation="8dp"
-        android:background="#fff">
+        android:background="#fff"
+        app:cardBackgroundColor="#e7d7fc">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +42,7 @@
                 android:id="@+id/todayBtnImageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/today"/>
+                android:src="@drawable/today2"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +69,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
         app:cardElevation="8dp"
-        android:background="#fff">
+        android:background="#fff"
+        app:cardBackgroundColor="#e7d7fc">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,6 +108,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="#fff"
+        app:cardBackgroundColor="#e7d7fc"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp">
 
@@ -120,7 +123,7 @@
                 android:id="@+id/monthBtnImageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/month" />
+                android:src="@drawable/month2" />
 
             <TextView
                 android:layout_width="wrap_content"

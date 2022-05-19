@@ -23,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility "1.8"
+        targetCompatibility 1.8
     }
 }
 
@@ -38,6 +38,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:4.3.2'
     implementation 'joda-time:joda-time:2.10.14'
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+    implementation files('libs/JRI.jar')
+    implementation 'com.jjoe64:graphview:4.2.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

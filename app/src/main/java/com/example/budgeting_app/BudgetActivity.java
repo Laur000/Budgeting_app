@@ -61,16 +61,23 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
-public class BudgetActivity extends AppCompatActivity {
+public class BudgetActivity extends AppCompatActivity{
 
     private FloatingActionButton fab;
 
@@ -83,8 +90,10 @@ public class BudgetActivity extends AppCompatActivity {
 
     private String post_key = "";
     private String item = "";
+    private String date_fromItem = "";
     private float amount = 0 ;
     private String details = "";
+    ArrayList<PredictionData> food_data = new ArrayList<PredictionData>();
 
 
     @Override
@@ -115,6 +124,7 @@ public class BudgetActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 addItem();
 
             }
@@ -132,10 +142,24 @@ public class BudgetActivity extends AppCompatActivity {
                 Log.d("TOTAL CREATED SUCCES", "task created scuccesfully");
             }
         });
-
-
-
     }
+    private void createTotals(String dateID){
+        Map<String, Object> data = new HashMap<>();
+        data.put("Food", 0);
+        data.put("Transport", 0);
+        data.put("House", 0);
+        data.put("Education", 0);
+
+
+        budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").document(dateID)
+                .set(data, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d("TOTAL CREATED SUCCES", "task created scuccesfully");
+            }
+        });
+    }
+
 
     private void updateTotal(String dateID) {
 
@@ -185,6 +209,45 @@ public class BudgetActivity extends AppCompatActivity {
 
     }
 
+    private void updateTotals(String dateID, String category, String dateID2){
+
+        final float[] total = {0};
+
+        budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
+                .collection("Items").whereEqualTo("category",category).whereEqualTo("date", dateID2)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+
+                        if(error!=null){
+                            Log.e("Firebase Error" , error.getMessage());
+                            return;
+                        }
+
+                        if (documentSnapshot != null && !documentSnapshot.getDocuments().isEmpty()) {
+
+                            List<DocumentSnapshot> documents = documentSnapshot.getDocuments();
+
+                            for (DocumentSnapshot item : documents) {
+
+                                total[0] = total[0] +   Float.valueOf(item.get("amount").toString()) ;
+                            }
+
+
+                            budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").document(dateID2)
+                                    .update(category,  total[0]).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.d("TOTAL UPDATE SUCCES", "DocumentSnapshot successfully written!");
+                                }
+                            });
+                        }
+
+                    }
+                });
+    }
+
+
 
     private void addItem(){
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
@@ -206,6 +269,7 @@ public class BudgetActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String budgetAmount = amount.getText().toString();
                 String budgetItem = itemSpinner.getSelectedItem().toString();
 
@@ -255,6 +319,7 @@ public class BudgetActivity extends AppCompatActivity {
                            if(task.isSuccessful()){
                                Toast.makeText(BudgetActivity.this, "Budget item added successfully", Toast.LENGTH_SHORT).show();
                                updateTotal(dateID);
+                               updateTotals(dateID,budgetItem, date);
                            }else{
 
                                Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
@@ -267,6 +332,9 @@ public class BudgetActivity extends AppCompatActivity {
           /*         CollectionReference docRef = budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid())
                              .collection("Budgets").document(dateID)
                             .collection("Categories").document(budgetItem).collection("Items");*/
+                    budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").document(date)
+                            ;
+
                 }
                 dialog.dismiss();
 
@@ -292,10 +360,11 @@ public class BudgetActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //get current date
         Calendar cal = Calendar.getInstance();
         DateFormat dateFormatID = new SimpleDateFormat("MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String dateID  = dateFormatID.format(cal.getTime());
+        String date = dateFormat.format(cal.getTime());
 
            budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
                 .collection("Items")
@@ -307,8 +376,6 @@ public class BudgetActivity extends AppCompatActivity {
                     Log.e("Firebase Error" , error.getMessage());
                     return;
                 }
-
-
                 if(documentSnapshot.getDocuments().isEmpty()){
                         createTotal(dateID);
                 }
@@ -322,12 +389,13 @@ public class BudgetActivity extends AppCompatActivity {
                     for (DocumentSnapshot item : documents) {
                         dataArrayList.add(item.toObject(Data.class));
                         mUserKey.add(item.getId());
+
+
                         /*   Log.d("DataShow AMOUNT", item.get("amount").toString());
                         Log.d("DataShow DATE",  item.get("category").toString());*/
 
 
                     }
-
                     MyAdaptor myAdaptor = new MyAdaptor(BudgetActivity.this,dataArrayList, mUserKey);
                     myAdaptor.notifyDataSetChanged();
                     recyclerView.setAdapter(myAdaptor);
@@ -357,34 +425,24 @@ public class BudgetActivity extends AppCompatActivity {
                     }
                 });
 
+        budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").document(date)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.w("TOTAL SPEND FAILED", "Listen failed.", error);
+                            return;
+                        }
 
+                        if (!value.exists()) {
+                            createTotals(date);
 
+                        } else {
+                            System.out.println("EXISTA");
+                        }
+                    }
+                });
 
-
-        //!!!!!!!!1--------NEXT STEP: Total, dupa ce e creat automat, sa fie afisat sus 1:12:43 tutorial
-
-        //cod tutorial initial
-      /*
-       FirebaseRecyclerOptions<Data> options = new FirebaseRecyclerOptions.Builder<Data>().setQuery(budgetRef, Data.class).build();
-        FirebaseRecyclerAdapter <Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>() {
-            @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Data model) {
-                holder.setItemAmount("Allocated amount: " + model.getAmount());
-                holder.setDate("On: " + model.getDate());
-                holder.setItemName("BudgetDetails: " + model.getDetails());
-
-            }
-
-            @NonNull
-            @Override
-            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieve_layout, parent , false);
-                return new MyViewHolder(view);
-            }
-        };
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
-        adapter.notifyDataSetChanged();*/
     }
 
 
@@ -414,7 +472,7 @@ public class BudgetActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
             Data data = dataArrayList.get(position);
 
-            holder.setItemName("Item: " + data.getCategory());
+            holder.setItemName(data.getCategory());
             holder.setItemAmount("Amount: " + data.getAmount());
             holder.setNote("Details: " + data.getDetails());
             holder.setDate("Date: " + data.getDate());
@@ -468,6 +526,7 @@ public class BudgetActivity extends AppCompatActivity {
                     item = data.getCategory();
                     amount = data.getAmount();
                     details = data.getDetails();
+                    date_fromItem = data.getDate();
                     updateData();
 
                 }
@@ -565,7 +624,11 @@ public class BudgetActivity extends AppCompatActivity {
 
 
                 //add item
-                Data data = new Data(date, details, amount, months.getMonths(), item);
+
+
+
+
+                Data data = new Data(date_fromItem, details, amount, months.getMonths(), item);
 
                 budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
                         .collection("Items").document(post_key)
@@ -575,6 +638,7 @@ public class BudgetActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(BudgetActivity.this, "Budget item updated successfully", Toast.LENGTH_SHORT).show();
                             updateTotal(dateID);
+                            updateTotals(dateID,item, date_fromItem); //am nevoie de date-ul de la itemul pe care l modific
                         }else{
 
                             Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
@@ -599,6 +663,7 @@ public class BudgetActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(BudgetActivity.this, "Budget item deleted successfully", Toast.LENGTH_SHORT).show();
                             updateTotal(dateID);
+                            updateTotals(dateID,item, date_fromItem);
                         }else{
                             Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }

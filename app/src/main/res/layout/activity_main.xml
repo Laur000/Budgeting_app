@@ -4,144 +4,154 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgimage"
+    android:background="@drawable/bgimage2"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000"
-        android:id="@+id/toolbar"
+        android:background="#678a6a"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-       />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <TableLayout
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:paddingHorizontal="10dp">
+
         <TableRow>
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Budget"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Today"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Week"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Month"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Savings"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow>
+
             <TextView
                 android:id="@+id/budgetTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="$0"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/todayTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="$0"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/weekTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="$0"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/monthTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="$0"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/savingsTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="$0"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </TableRow>
     </TableLayout>
 
@@ -149,248 +159,248 @@
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/table"
-        >
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:rowCount="3"
-        android:columnCount="2"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_below="@+id/table">
 
-        >
-        <androidx.cardview.widget.CardView
-            android:id="@+id/budgetCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_gravity="fill"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#fff">
-            <LinearLayout
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:columnCount="2"
+            android:rowCount="3"
+
+            >
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/budgetCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_gravity="center_vertical|center_horizontal">
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/budget"/>
-                <TextView
+                android:layout_row="0"
+                android:layout_rowWeight="1"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="#fff">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Budget"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:textAlignment="center"/>
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.utils.widget.ImageFilterView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/budget2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Spendings"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
 
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/todayCardView"
+                android:layout_width="71dp"
+                android:layout_height="67dp"
+                android:layout_row="0"
+                android:layout_rowWeight="1"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:background="#fff">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.utils.widget.ImageFilterView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/future_spendings" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Future spendings"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
 
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/todayCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_gravity="fill"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#fff">
-            <LinearLayout
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/setBudgetCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_gravity="center_vertical|center_horizontal">
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/today"/>
-                <TextView
+                android:layout_row="1"
+                android:layout_rowWeight="1"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:background="#fff"
+                >
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:textAlignment="center"/>
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.utils.widget.ImageFilterView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_set_budget" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Budget"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
 
+            </androidx.cardview.widget.CardView>
 
-
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/weekCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_gravity="fill"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#fff">
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/monthCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_gravity="center_vertical|center_horizontal">
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/week"/>
-                <TextView
+                android:layout_row="1"
+                android:layout_rowWeight="1"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:background="#fff">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Week"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:textAlignment="center"/>
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.utils.widget.ImageFilterView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/month2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Month"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
 
+            </androidx.cardview.widget.CardView>
 
-
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/monthCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_gravity="fill"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#fff">
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/analyticsCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_gravity="center_vertical|center_horizontal">
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/month"/>
-                <TextView
+                android:layout_row="2"
+                android:layout_rowWeight="1"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:background="#fff">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Month"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:textAlignment="center"/>
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.utils.widget.ImageFilterView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_analytics2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Analytics"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
 
+            </androidx.cardview.widget.CardView>
 
-
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/analyticsCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:layout_gravity="fill"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#fff">
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/historyCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_gravity="center_vertical|center_horizontal">
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_analytics"/>
-                <TextView
+                android:layout_row="2"
+                android:layout_rowWeight="1"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:background="#fff">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Analytics"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:textAlignment="center"/>
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.utils.widget.ImageFilterView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_history2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="History"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
 
-            </LinearLayout>
-
-
-
-
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/historyCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:layout_gravity="fill"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#fff">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_gravity="center_vertical|center_horizontal">
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_history"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="History"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:textAlignment="center"/>
-
-
-            </LinearLayout>
-
-
-
-
-        </androidx.cardview.widget.CardView>
-
-
-    </GridLayout>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            app:fabSize="normal"
-            android:id="@+id/fab"
-            app:backgroundTint="#000"
-            android:src="@drawable/ic_add"
-            android:layout_margin="16dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </GridLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgimage2"
+    tools:context=".setBudgetActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settingsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#678a6a"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/setVenitTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="Total income: "
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/settingsToolbar"
+        tools:layout_editor_absoluteX="4dp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/setBudgetCardView"
+        android:layout_width="390dp"
+        android:layout_height="165dp"
+        app:cardBackgroundColor="#e7d7fc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setVenitTotal">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutTransport"
+                    android:layout_width="377dp"
+                    android:layout_height="149dp"
+                    android:layout_margin="5dp">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutBudget"
+                        android:layout_width="259dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Method 60/10/10/10/10"
+                            android:textColor="#000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/cheltuieliPrincipale60"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Main spendings:"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/economii10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Savings:"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/distractii10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Entertainment:"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/investitii10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Investments:"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/educatie10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Education:"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/butonSet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginBottom="48dp"
+                        android:layout_toEndOf="@+id/linearLayoutBudget"
+                        android:foregroundGravity="center"
+                        android:src="@drawable/set"
+                        app:backgroundTint="#678a6a"
+                        app:fabSize="normal" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
