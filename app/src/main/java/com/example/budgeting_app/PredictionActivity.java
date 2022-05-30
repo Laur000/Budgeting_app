@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.LegendRenderer;
@@ -27,6 +29,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 public class PredictionActivity extends AppCompatActivity {
@@ -59,7 +63,8 @@ public class PredictionActivity extends AppCompatActivity {
             public void onClick(View view) {
                // Toast.makeText(PredictionActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
 
-               getPredictionData();
+                graph.removeAllSeries();
+                getPredictionData();
 
 
             }
@@ -70,10 +75,22 @@ public class PredictionActivity extends AppCompatActivity {
         buttonPredictFoodShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(PredictionData d: food_data){
+              /*  for(PredictionData d: food_data){
                     System.out.println("Food total: "+ d.date+":  " + d.total+ " -----");
 
-                }
+                }*/
+
+              /*  Map<String, Object> data = new HashMap<>();
+
+                data.put("Eating out", 0);
+
+                budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").document("10-05-2022")
+                        .set(data, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d("TOTAL CREATED SUCCES", "task created scuccesfully");
+                    }
+                });*/
             }
         });
 
@@ -93,10 +110,15 @@ public class PredictionActivity extends AppCompatActivity {
         loader.setProgress(0);
         loader.show();
 
+
+
+        final Spinner itemSpinnerSetBudget =findViewById(R.id.itemSpinnerSetBudget);
+        String budgetItem = itemSpinnerSetBudget.getSelectedItem().toString();
         //---------------------------------------
 
 
-        budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful() && !task.getResult().isEmpty()) {
@@ -113,7 +135,7 @@ public class PredictionActivity extends AppCompatActivity {
                             String data_past_f1 = dateFormat1.format(cal.getTime());
 
                             if(document.getId().toString().equals(data_past_f1)){
-                                double totalAmount = Double.parseDouble(document.get("Food").toString());
+                                double totalAmount = Double.parseDouble(document.get(budgetItem).toString());
                                 food_data.add(new PredictionData(data_past_f1, totalAmount));
                          }
                       }
@@ -134,16 +156,16 @@ public class PredictionActivity extends AppCompatActivity {
 
                     //set color, title, curve, radius
 
-                    series.setColor(Color.RED);
+                    series.setColor(Color.WHITE);
                     series.setTitle("Heart Curve 1");
                     series.setDrawDataPoints(true);
                     //series.setDataPointsRadius(16);
                     series.setThickness(8);
 
                     //graph title
-                    graph.setTitle("Food data prediction");
-                    graph.setTitleTextSize(90);
-                    graph.setTitleColor(Color.BLUE);
+                    graph.setTitle(budgetItem + " data");
+                    graph.setTitleTextSize(50);
+                    graph.setTitleColor(Color.WHITE);
 
                     //legend
 
@@ -154,10 +176,10 @@ public class PredictionActivity extends AppCompatActivity {
                     GridLabelRenderer gridLabel = graph.getGridLabelRenderer();
                     gridLabel.setHorizontalAxisTitle("Nr crt");
                     gridLabel.setHorizontalAxisTitleTextSize(30);
-                    gridLabel.setVerticalAxisTitle("Total food");
+                    gridLabel.setVerticalAxisTitle("Total " + budgetItem);
                     gridLabel.setVerticalAxisTitleColor(30);
                     loader.dismiss();
-            } else if (task.getResult().isEmpty()) {
+            } else if (task.getResult().isEmpty() || task.isCanceled()) {
                     System.out.println("EMPTY TASK");
                     loader.dismiss();
             }
@@ -176,16 +198,7 @@ public class PredictionActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-              /*  Rengine re = new Rengine(new String[]{"--no-save"},false,null);
-
-
-                String bVector = "c(4,5,6)";
-                String rv = re.eval(bVector).asString();
-                if(rv.isEmpty()){
-                    Log.d("RLIB", "Sum of two vectors : c = :  ");
-
-                }*/
-                Log.d("RLIB", "Sum of two vectors : c = :  NIMIC");
+               Log.d("RLIB", "Sum of two vectors : c = :  NIMIC");
                 double[] x = {
                         12.8, 12.2, 11.9, 10.9, 10.6, 11.3, 11.1, 10.4, 10.0, 9.7, 9.7, 9.7,
                         11.1, 10.5, 10.3, 9.8, 9.8, 10.4, 10.4, 10.0, 9.7, 9.3, 9.6, 9.7,

@@ -12,7 +12,7 @@
         android:id="@+id/settingsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#678a6a"
+        android:background="#372776"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,11 +38,14 @@
         android:id="@+id/setBudgetCardView"
         android:layout_width="390dp"
         android:layout_height="165dp"
-        app:cardBackgroundColor="#e7d7fc"
+        app:cardBackgroundColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setVenitTotal">
+        app:layout_constraintTop_toBottomOf="@+id/setVenitTotal"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -69,7 +72,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Method 60/10/10/10/10"
-                            android:textColor="#000"
+                            android:textColor="#4147D5"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -78,7 +81,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Main spendings:"
-                            android:textColor="#000"
+                            android:textColor="#4147D5"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -88,7 +91,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Savings:"
-                            android:textColor="#000"
+                            android:textColor="#4147D5"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -97,7 +100,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Entertainment:"
-                            android:textColor="#000"
+                            android:textColor="#4147D5"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -106,7 +109,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Investments:"
-                            android:textColor="#000"
+                            android:textColor="#4147D5"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -115,7 +118,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Education:"
-                            android:textColor="#000"
+                            android:textColor="#4147D5"
                             android:textSize="15sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -131,8 +134,10 @@
                         android:layout_toEndOf="@+id/linearLayoutBudget"
                         android:foregroundGravity="center"
                         android:src="@drawable/set"
-                        app:backgroundTint="#678a6a"
-                        app:fabSize="normal" />
+                        app:backgroundTint="#D7E0FF"
+                        app:fabSize="normal"
+
+                        />
                 </RelativeLayout>
 
 

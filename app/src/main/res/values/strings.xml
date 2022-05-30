@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Budgeting_App</string>
+    <string name="app_name">CYBudget</string>
 
     <string-array name="items">
         <item>Select item</item>
@@ -9,6 +9,8 @@
         <item>Entertainment</item>
         <item>Education</item>
         <item>Eating out</item>
+        <item>Investments</item>
+        <item>Savings</item>
         <item>Health</item>
         <item>Gifts</item>
         <item>Sports</item>

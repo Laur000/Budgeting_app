@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Sampler;
@@ -144,11 +145,29 @@ public class BudgetActivity extends AppCompatActivity{
         });
     }
     private void createTotals(String dateID){
+        DateFormat dateFormatID = new SimpleDateFormat("MM-yyyy");
+        Calendar cal = Calendar.getInstance();
+        String dateID2 = dateFormatID.format(cal.getTime());
+
+
         Map<String, Object> data = new HashMap<>();
         data.put("Food", 0);
         data.put("Transport", 0);
         data.put("House", 0);
+        data.put("Entertainment", 0);
         data.put("Education", 0);
+        data.put("Eating out", 0);
+        data.put("Investments", 0);
+        data.put("Savings", 0);
+        data.put("Health", 0);
+        data.put("Gifts", 0);
+        data.put("Sports", 0);
+        data.put("Car", 0);
+        data.put("Pets", 0);
+        data.put("Clothes", 0);
+        data.put("Bills", 0);
+        data.put("Date", dateID2);
+
 
 
         budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").document(dateID)
@@ -164,13 +183,6 @@ public class BudgetActivity extends AppCompatActivity{
     private void updateTotal(String dateID) {
 
 
-       /* budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
-                .update("total", amount).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Log.d("TOTAL UPDATE SUCCES", "DocumentSnapshot successfully written!");
-            }
-        });*/
 
 
         final float[] total = {0};
@@ -419,6 +431,7 @@ public class BudgetActivity extends AppCompatActivity{
 
                             String sTotal = String.valueOf("Total spend: " + String.format("%.2f",totalShow));
                             totalBudgetAmountTextView.setText(sTotal);
+                            totalBudgetAmountTextView.setTextColor(Color.WHITE);
                         } else {
                             Log.d("TOTAL SPEND: null", "TOTAL SPEND: null");
                         }
@@ -494,29 +507,35 @@ public class BudgetActivity extends AppCompatActivity{
                     holder.imageView.setImageResource(R.drawable.ic_education);
                     break;
                 case "Eating out":
-                    holder.imageView.setImageResource(R.drawable.ic_other); //TO DO ICON
+                    holder.imageView.setImageResource(R.drawable.ic_eatingout); //TO DO ICON
+                    break;
+                case "Investments":
+                    holder.imageView.setImageResource(R.drawable.ic_investments); //TO DO ICON
+                    break;
+                case "Savings":
+                    holder.imageView.setImageResource(R.drawable.ic_savings); //TO DO ICON
                     break;
                 case "Health":
                     holder.imageView.setImageResource(R.drawable.ic_health);
                     break;
                 case "Gifts":
-                    holder.imageView.setImageResource(R.drawable.ic_other); //TO DO ICON
+                    holder.imageView.setImageResource(R.drawable.ic_gifts); //TO DO ICON
                     break;
                 case "Sports":
-                    holder.imageView.setImageResource(R.drawable.ic_other); //TO DO ICON
+                    holder.imageView.setImageResource(R.drawable.ic_sports); //TO DO ICON
                     break;
                 case "Car":
-                    holder.imageView.setImageResource(R.drawable.ic_other); //TO DO ICON
+                    holder.imageView.setImageResource(R.drawable.ic_car); //TO DO ICON
                     break;
                 case "Pets":
-                    holder.imageView.setImageResource(R.drawable.ic_other); //TO DO ICON
+                    holder.imageView.setImageResource(R.drawable.ic_pets); //TO DO ICON
                     break;
                 case "Clothes":
                     holder.imageView.setImageResource(R.drawable.ic_shirt);
                     break;
 
                 case "Bills":
-                    holder.imageView.setImageResource(R.drawable.ic_other); //TO DO ICON
+                    holder.imageView.setImageResource(R.drawable.ic_bills); //TO DO ICON
                     break;
             }
             holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -559,18 +578,22 @@ public class BudgetActivity extends AppCompatActivity{
             public void setItemName(String itemName){
                 TextView item = mView.findViewById(R.id.item);
                 item.setText(itemName);
+                item.setTextColor(Color.parseColor("#4147D5"));
             }
             public void setItemAmount(String itemAmount){
                 TextView amount = mView.findViewById(R.id.amount);
                 amount.setText(itemAmount);
+                amount.setTextColor(Color.parseColor("#4147D5"));
             }
             public void setDate(String itemDate){
                 TextView date = mView.findViewById(R.id.date);
                 date.setText(itemDate);
+                date.setTextColor(Color.parseColor("#4147D5"));
             }
             public void setNote(String itemNote){
                 TextView note = mView.findViewById(R.id.note);
                 note.setText(itemNote);
+                note.setTextColor(Color.parseColor("#4147D5"));
             }
 
         }

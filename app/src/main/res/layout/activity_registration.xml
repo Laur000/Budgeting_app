@@ -49,7 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textAllCaps="false"
-        android:text="Sign Up"/>
+        android:text="SIGN UP"
+        android:backgroundTint="@color/purple_700"
+        />
 
 
 </LinearLayout>

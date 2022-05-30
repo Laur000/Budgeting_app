@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -47,7 +48,7 @@ public class setBudgetActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_budget);
 
@@ -94,7 +95,7 @@ public class setBudgetActivity extends AppCompatActivity {
     }
     private void updateBudget(Float venitTotal){
 
-        //update the main table from here? after yopu modified it
+        //update the main table from here? after you modified it
 
         Float cheltuieliTotale = (venitTotal*60)/100;
         Float economii = (venitTotal*10)/100;
@@ -128,11 +129,24 @@ public class setBudgetActivity extends AppCompatActivity {
                 .update("Educatie",educatie);
         //--------------------------------------------update the page----------------------------
         setVenitTotal.setText("Total income: "+ venitTotal.toString());
+        setVenitTotal.setTextColor(Color.WHITE);
+
         cheltuieliPrincipale60.setText("Main spendings: "+cheltuieliTotale.toString());
+        cheltuieliPrincipale60.setTextColor(Color.parseColor("#4147D5"));
+
         economii10.setText("Savings: " + economii.toString());
+        economii10.setTextColor(Color.parseColor("#4147D5"));
+
         distractii10.setText("Entertainment: " + distractii.toString());
+        distractii10.setTextColor(Color.parseColor("#4147D5"));
+
         investitii10.setText("Investments: " + investitii.toString());
+        investitii10.setTextColor(Color.parseColor("#4147D5"));
+
         educatie10.setText("Education: "+ educatie.toString());
+        educatie10.setTextColor(Color.parseColor("#4147D5"));
+
+
 
 
 
@@ -228,11 +242,22 @@ public class setBudgetActivity extends AppCompatActivity {
                 if(task.getResult().exists()){
 
                     setVenitTotal.setText("Total income: "+ task.getResult().get("VenitTotal").toString());
+                    setVenitTotal.setTextColor(Color.WHITE);
+
                     cheltuieliPrincipale60.setText("Main spendings: "+task.getResult().get("CheltuieliPrincipale").toString());
+                    cheltuieliPrincipale60.setTextColor(Color.parseColor("#4147D5"));
+
                     economii10.setText("Savings: " + task.getResult().get("Economii").toString());
+                    economii10.setTextColor(Color.parseColor("#4147D5"));
+
                     distractii10.setText("Entertainment: " + task.getResult().get("Distractii").toString());
+                    distractii10.setTextColor(Color.parseColor("#4147D5"));
+
                     investitii10.setText("Investments: " + task.getResult().get("Investitii").toString());
+                    investitii10.setTextColor(Color.parseColor("#4147D5"));
+
                     educatie10.setText("Education: "+ task.getResult().get("Educatie").toString());
+                    educatie10.setTextColor(Color.parseColor("#4147D5"));
 
                     loader.dismiss();
                 }

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#887ab7"
-    tools:context=".ChooseAnalyticActivity">
+    tools:context=".ChooseAnalyticActivity"
+    android:background="@drawable/bgimage2">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#678a6a"
+        android:background="#372776"
         android:id="@+id/toolbar"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -23,15 +23,15 @@
         android:id="@+id/todayCardView"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         app:cardCornerRadius="10dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
         app:cardElevation="8dp"
         android:background="#fff"
-        app:cardBackgroundColor="#e7d7fc">
+        >
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,46 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="Today Analytics"
                 android:textStyle="bold"
-                android:textColor="#000"
-                android:textAlignment="center"/>
-
-
-        </LinearLayout>
-
-
-
-
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/weekCardView"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:cardCornerRadius="10dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardElevation="8dp"
-        android:background="#fff"
-        app:cardBackgroundColor="#e7d7fc">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_gravity="center_vertical|center_horizontal">
-            <ImageView
-                android:id="@+id/weekBtnImageView"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/week"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Week Analytics"
-                android:textStyle="bold"
-                android:textColor="#000"
+                android:textColor="#4147D5"
                 android:textAlignment="center"/>
 
 
@@ -100,15 +61,14 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/monthCardView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_gravity="center"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="#fff"
-        app:cardBackgroundColor="#e7d7fc"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp">
 
@@ -130,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="Month Analytics"
                 android:textAlignment="center"
-                android:textColor="#000"
+                android:textColor="#4147D5"
                 android:textStyle="bold" />
 
 
@@ -138,5 +98,88 @@
 
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/budgetAnalyticsCardView"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardElevation="8dp"
+        android:background="#fff"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center_vertical|center_horizontal">
+            <ImageView
+                android:id="@+id/weekBtnImageView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/budgetanalitycs"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Budget Analytics"
+                android:textStyle="bold"
+                android:textColor="#4147D5"
+                android:textAlignment="center"/>
+
+
+        </LinearLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/historyCardView"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#fff"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/historyBtnImageView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/history" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="History"
+                android:textAlignment="center"
+                android:textColor="#4147D5"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
 
 </LinearLayout>

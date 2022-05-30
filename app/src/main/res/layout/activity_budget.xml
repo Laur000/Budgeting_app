@@ -14,7 +14,8 @@
 <androidx.appcompat.widget.Toolbar
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-    android:background="#678a6a"
+
+    android:background="#372776"
 android:id="@+id/toolbar"
 android:elevation="4dp"
 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -25,7 +26,7 @@ app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:id="@+id/totalBudgetAmountTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total spend: $0"
+        android:text="Total spend: 0"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -48,7 +49,7 @@ app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:layout_gravity="bottom|end"
             app:fabSize="normal"
             android:id="@+id/fab"
-            app:backgroundTint="#678a6a"
+            app:backgroundTint="#D7E0FF"
             android:src="@drawable/plus"
             android:layout_margin="16dp"/>
 
