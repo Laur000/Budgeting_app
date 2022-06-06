@@ -64,6 +64,7 @@
                             android:textStyle="bold"
                             android:textSize="15sp"/>
                         <TextView
+                            android:id="@+id/monthTransport"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -108,6 +109,7 @@
                             android:textStyle="bold"
                             android:textSize="15sp"/>
                         <TextView
+                            android:id="@+id/monthFood"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -149,6 +151,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthEatingOut"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -194,6 +197,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthHealth"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -238,6 +242,7 @@
                             android:textStyle="bold"
                             android:textSize="15sp"/>
                         <TextView
+                            android:id="@+id/monthGifts"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -283,6 +288,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthSports"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -328,6 +334,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthCar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -373,6 +380,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthPets"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -418,6 +426,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthClothes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -463,6 +472,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthBills"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -508,6 +518,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthInvestments"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -553,6 +564,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthSavings"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -598,6 +610,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthEntertainment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -639,6 +652,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthEducation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -684,6 +698,7 @@
                             android:textSize="15sp"/>
 
                         <TextView
+                            android:id="@+id/monthHouse"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Month"
@@ -702,54 +717,19 @@
                     android:id="@+id/anyChartView"
                     android:layout_width="match_parent"
                     android:layout_height="600dp"/>
-                <RelativeLayout
-                    android:id="@+id/linearLayoutAnalysis"
-                    android:layout_width="match_parent"
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="20dp">
-                    <LinearLayout
-                        android:id="@+id/linearLayout10"
-                        android:layout_width="250dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Summary Spending Status"
-                            android:textColor="#fff"
-                            android:textSize="18sp"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:id="@+id/monthSpentAmount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Total spent"
-                            android:textColor="#fff"
-                            android:textSize="15sp"
-                            android:textStyle="bold"/>
+                    android:layout_gravity="center"
+                    app:fabSize="normal"
+                    android:id="@+id/fab"
+                    app:backgroundTint="#D7E0FF"
+                    android:src="@drawable/arrow"
+                    android:layout_margin="16dp"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Month"
-                            android:textColor="#fff"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_toEndOf="@+id/linearLayout10"
-                        android:src="@drawable/today" />
-                </RelativeLayout>
             </LinearLayout>
 
 

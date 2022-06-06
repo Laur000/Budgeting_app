@@ -62,6 +62,8 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_analytics);
+
+
         budgetRef = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         loader = new ProgressDialog(this);
@@ -82,7 +84,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         analitycsEntertainmentAmount = findViewById(R.id.analitycsEntertainmentAmount);
         analitycsEducationAmount = findViewById(R.id.analitycsEducationAmount);
         analitycsHouseAmount = findViewById(R.id.analitycsHouseAmount);
-        monthSpentAmount = findViewById(R.id.monthSpentAmount);
+
 
 
 

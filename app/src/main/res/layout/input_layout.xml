@@ -54,6 +54,14 @@
             android:inputType="text"
             android:textColor="#000"
             android:textColorHint="#000"/>
+        <EditText
+            android:id="@+id/dateItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date..."
+            android:inputType="text"
+            android:textColor="#000"
+            android:textColorHint="#000"/>
     </LinearLayout>
 
     <LinearLayout

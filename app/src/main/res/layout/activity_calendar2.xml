@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CalendarActivity2">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:background="#372776"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        android:layout_marginTop="68dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:layout_editor_absoluteX="0dp">
+
+        <Button
+            android:id="@+id/buttonCloseCalendar"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/datePicker"
+            android:layout_alignStart="@+id/datePicker"
+            android:layout_alignEnd="@+id/datePicker"
+            android:layout_alignBottom="@+id/datePicker"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="198dp"
+            android:layout_marginBottom="-65dp"
+            android:text="Close" />
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:datePickerMode="calendar" />
+
+        <Button
+            android:id="@+id/button2Calendar"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/datePicker"
+            android:layout_alignStart="@+id/datePicker"
+            android:layout_alignEnd="@+id/datePicker"
+            android:layout_alignBottom="@+id/datePicker"
+            android:layout_marginStart="189dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="-65dp"
+            android:text="choose" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="24dp"
+        android:text="Choose month:"
+        android:textColor="#4147D5"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

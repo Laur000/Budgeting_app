@@ -254,6 +254,15 @@ public class BudgetActivity extends AppCompatActivity{
                                 }
                             });
                         }
+                        if (documentSnapshot == null || documentSnapshot.getDocuments().isEmpty()) {
+                            budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").document(dateID2)
+                                    .update(category, 0).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.d("TOTAL UPDATE SUCCES", "DocumentSnapshot successfully written!");
+                                }
+                            });
+                        }
 
                     }
                 });
@@ -273,14 +282,23 @@ public class BudgetActivity extends AppCompatActivity{
         final Spinner itemSpinner = myView.findViewById(R.id.itemSpinner);
         final EditText amount = myView.findViewById(R.id.amount);
         final EditText details = myView.findViewById(R.id.details);
+        final EditText dateItem = myView.findViewById(R.id.dateItem);
         final Button cancel = myView.findViewById(R.id.cancel);
         final Button save = myView.findViewById(R.id.save);
 
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime());
+
+
+        dateItem.setText(date);
         //Save button logic
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                DateValidator validator = new DateValidatorUsingDateFormat("dd-MM-yyyy");
 
                 String budgetAmount = amount.getText().toString();
                 String budgetItem = itemSpinner.getSelectedItem().toString();
@@ -293,6 +311,10 @@ public class BudgetActivity extends AppCompatActivity{
                 }
                 if(TextUtils.isEmpty(budgetAmount)){
                     amount.setError("Amount is required!");
+                    return;
+                }
+                if(!validator.isValid(dateItem.getText().toString())){
+                    dateItem.setError("Invalid date. Correct format dd-MM-yyyy");
                     return;
                 }
                 if(budgetItem.equals("Select item")){
@@ -318,7 +340,7 @@ public class BudgetActivity extends AppCompatActivity{
                     Months months =  Months.monthsBetween(epoch, now);
 
                     //add item
-                    Data data = new Data(date, budgetDetails, Float.parseFloat(budgetAmount), months.getMonths(), budgetItem);
+                    Data data = new Data(dateItem.getText().toString(), budgetDetails, Float.parseFloat(budgetAmount), months.getMonths(), budgetItem);
 
                    // budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).set(city); adaug email, il iau din field de login/register
 
@@ -331,7 +353,7 @@ public class BudgetActivity extends AppCompatActivity{
                            if(task.isSuccessful()){
                                Toast.makeText(BudgetActivity.this, "Budget item added successfully", Toast.LENGTH_SHORT).show();
                                updateTotal(dateID);
-                               updateTotals(dateID,budgetItem, date);
+                               updateTotals(dateID,budgetItem, dateItem.getText().toString());
                            }else{
 
                                Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();

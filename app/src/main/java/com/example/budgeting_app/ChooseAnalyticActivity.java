@@ -30,7 +30,7 @@ public class ChooseAnalyticActivity extends AppCompatActivity {
         monthCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChooseAnalyticActivity.this , MonthAnalyticsActivity.class);
+                Intent intent = new Intent(ChooseAnalyticActivity.this , CalendarActivity.class);
                 startActivity(intent);
             }
         });
@@ -38,7 +38,7 @@ public class ChooseAnalyticActivity extends AppCompatActivity {
         budgetAnalyticsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChooseAnalyticActivity.this , BudgetAnalyticsActivity.class);
+                Intent intent = new Intent(ChooseAnalyticActivity.this , CalendarActivity2.class);
                 startActivity(intent);
             }
         });

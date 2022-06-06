@@ -78,6 +78,9 @@
 
 
     </LinearLayout>
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -391,9 +394,20 @@
                 </RelativeLayout>
 
                 <com.anychart.AnyChartView
-                    android:id="@+id/anyChartView"
+                    android:id="@+id/anyChartViewBudget"
                     android:layout_width="match_parent"
                     android:layout_height="600dp"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:fabSize="normal"
+                    android:id="@+id/fab"
+                    app:backgroundTint="#D7E0FF"
+                    android:src="@drawable/arrow"
+                    android:layout_margin="16dp"/>
             </LinearLayout>
 
 

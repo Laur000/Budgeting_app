@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting_App">
         <activity
+            android:name=".CalendarActivity2"
+            android:exported="true" />
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CalendarActivity"
+            android:exported="true" />
+        <activity
             android:name=".BudgetAnalyticsActivity"
             android:exported="true" />
         <activity
