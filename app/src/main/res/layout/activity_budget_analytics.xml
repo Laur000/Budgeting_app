@@ -393,7 +393,7 @@
                         android:src="@drawable/ic_education" />
                 </RelativeLayout>
 
-                <com.anychart.AnyChartView
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/anyChartViewBudget"
                     android:layout_width="match_parent"
                     android:layout_height="600dp"/>

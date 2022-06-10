@@ -97,6 +97,7 @@ public class BudgetActivity extends AppCompatActivity{
     ArrayList<PredictionData> food_data = new ArrayList<PredictionData>();
 
 
+    int check = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -366,8 +367,7 @@ public class BudgetActivity extends AppCompatActivity{
           /*         CollectionReference docRef = budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid())
                              .collection("Budgets").document(dateID)
                             .collection("Categories").document(budgetItem).collection("Items");*/
-                    budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Totale").document(date)
-                            ;
+
 
                 }
                 dialog.dismiss();
@@ -399,6 +399,8 @@ public class BudgetActivity extends AppCompatActivity{
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String dateID  = dateFormatID.format(cal.getTime());
         String date = dateFormat.format(cal.getTime());
+
+
 
            budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets").document(dateID)
                 .collection("Items")
@@ -449,11 +451,45 @@ public class BudgetActivity extends AppCompatActivity{
 
                         if (value != null && value.exists()) {
                             float totalShow = Float.valueOf(value.get("total").toString());
+                            budgetRef.collection("Users").document(mAuth.getCurrentUser().getUid()).collection("Budgets")
+                                    .document("Budget").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()){
 
 
-                            String sTotal = String.valueOf("Total spend: " + String.format("%.2f",totalShow));
-                            totalBudgetAmountTextView.setText(sTotal);
-                            totalBudgetAmountTextView.setTextColor(Color.WHITE);
+                                            if(totalShow > Float.valueOf(document.get("VenitTotal").toString()) && check ==0 ){
+                                                AlertDialog.Builder myDialog = new AlertDialog.Builder(BudgetActivity.this);
+                                                LayoutInflater inflater =  LayoutInflater.from(BudgetActivity.this);
+                                                View myView = inflater.inflate(R.layout.buget_error1, null);
+                                                myDialog.setView(myView);
+
+                                                final AlertDialog dialog = myDialog.create();
+                                                dialog.setCancelable(true);
+
+                                                final TextView error1 = myView.findViewById(R.id.error1);
+                                                error1.setText("The budget has been exceeded");
+                                                error1.setTextColor(Color.RED);
+
+                                                dialog.show();
+
+                                                check++;
+
+                                            } else if(totalShow < Float.valueOf(document.get("VenitTotal").toString())){
+                                                check= 0;
+                                            }
+                                            String sTotal = String.valueOf("Total spend: " + String.format("%.2f",totalShow));
+                                            totalBudgetAmountTextView.setText(sTotal);
+                                            totalBudgetAmountTextView.setTextColor(Color.WHITE);
+                                        }
+                                    }
+
+                                }
+                            });
+
+
                         } else {
                             Log.d("TOTAL SPEND: null", "TOTAL SPEND: null");
                         }
@@ -477,6 +513,10 @@ public class BudgetActivity extends AppCompatActivity{
                         }
                     }
                 });
+
+
+
+
 
     }
 

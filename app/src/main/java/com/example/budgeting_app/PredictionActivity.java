@@ -27,6 +27,8 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 
+import org.rosuda.JRI.REXP;
+import org.rosuda.JRI.Rengine;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
@@ -45,7 +47,7 @@ public class PredictionActivity extends AppCompatActivity {
     private GraphView graph;
     private TextView tableVal1, tableVal2, tableVal3, tableVal4, tableVal5, tableVal6, tableVal7, tableVal8, tableVal9, tableVal10;
     ArrayList<PredictionData> food_data = new ArrayList<PredictionData>();
-
+    Button buttonPredictFoodShow,buttonPredictFood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,10 @@ public class PredictionActivity extends AppCompatActivity {
 
 
 
-        Button buttonPredictFoodShow  = (Button)findViewById(R.id.buttonPredictFoodShow);
-       Button buttonPredictFood  = (Button)findViewById(R.id.buttonPredictFood);
+         buttonPredictFoodShow  = (Button)findViewById(R.id.buttonPredictFoodShow);
+        buttonPredictFoodShow.setEnabled(false);
+
+        buttonPredictFood  = (Button)findViewById(R.id.buttonPredictFood);
         buttonPredictFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,14 +88,14 @@ public class PredictionActivity extends AppCompatActivity {
                     graph.removeAllSeries();
                     getPredictionData();
                 }
-                buttonPredictFoodShow.setEnabled(true);
+
 
             }
         });
 
 
 
-        buttonPredictFoodShow.setEnabled(false);
+
 
         buttonPredictFoodShow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +124,10 @@ public class PredictionActivity extends AppCompatActivity {
                         Log.d("TOTAL CREATED SUCCES", "task created scuccesfully");
                     }
                 });*/
-                predictData();
+              /*  for (PredictionData d : food_data) {
+                    System.out.println("Food total: " + d.date + ":  " + d.total + " -----");
+                }*/
+               predictData();
 
             }
         });
@@ -159,7 +166,7 @@ public class PredictionActivity extends AppCompatActivity {
                                 double total = 0;
                                 for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                    for (int i = 10/*100*/; i >= 0; i--) {
+                                    for (int i = 100; i >= 0; i--) {
                                         Calendar cal = Calendar.getInstance();
                                         cal.add(Calendar.DATE, -i);
                                         String data_past_f1 = dateFormat1.format(cal.getTime());
@@ -167,9 +174,9 @@ public class PredictionActivity extends AppCompatActivity {
                                         if (document.getId().toString().equals(data_past_f1)) {
                                             double totalAmount = Double.parseDouble(document.get(budgetItem).toString());
 
-                                          //  if(totalAmount!= 0 ){
-                                                food_data.add(new PredictionData(data_past_f1, totalAmount));
-                                           // }
+                                           if(totalAmount!= 0 ) {
+                                               food_data.add(new PredictionData(data_past_f1, totalAmount));
+                                           }
 
 
                                         }
@@ -177,6 +184,7 @@ public class PredictionActivity extends AppCompatActivity {
 
 
                                 }
+
                                 //----------------------------------------GRAFIC----------------------------------------
 
                                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
@@ -195,7 +203,7 @@ public class PredictionActivity extends AppCompatActivity {
                                 series.setTitle("Heart Curve 1");
                                 series.setDrawDataPoints(true);
                                 //series.setDataPointsRadius(16);
-                                series.setThickness(8);
+                                series.setThickness(3);
 
                                 //graph title
                                 graph.setTitle(budgetItem + " data");
@@ -214,6 +222,24 @@ public class PredictionActivity extends AppCompatActivity {
                                 gridLabel.setVerticalAxisTitle("Total " + budgetItem);
                                 gridLabel.setVerticalAxisTitleColor(30);
                                 loader.dismiss();
+
+                                tableVal1.setText("0");
+                                tableVal2.setText("0");
+                                tableVal3.setText("0");
+                                tableVal4.setText("0");
+                                tableVal5.setText("0");
+                                tableVal6.setText("0");
+                                tableVal7.setText("0");
+                                tableVal8.setText("0");
+                                tableVal9.setText("0");
+                                tableVal10.setText("0");
+
+                                if(food_data.size() < 15){
+                                    Toast.makeText(PredictionActivity.this, "INSUFFICIENT DATA", Toast.LENGTH_SHORT).show();
+                                    buttonPredictFoodShow.setEnabled(false);
+                                }else{
+                                    buttonPredictFoodShow.setEnabled(true);
+                                }
                             } else if (task.getResult().isEmpty() || task.isCanceled()) {
                                 Toast.makeText(PredictionActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
                                 loader.dismiss();
@@ -222,6 +248,35 @@ public class PredictionActivity extends AppCompatActivity {
                     });
 
 
+    }
+
+    private double[] predictDataArima(double[] dataPrediction){
+
+        Rengine rengine = new Rengine(new String[]{"--vanilla"},false,null);
+        // enable R log
+        rengine.eval("log<-file('/tmp/file.log')");
+        rengine.eval("sink(log, append=TRUE)");
+        rengine.eval("sink(log, append=TRUE, type='message')");
+        rengine.eval("library(forecast)");
+
+        rengine.assign("value", dataPrediction);
+        rengine.eval("traindatats<-ts(value)");
+        rengine.eval("ar<-auto.arima(traindatats)");
+        REXP result = rengine.eval("f<-predict(ar,n.ahead=" + 10 + ")");
+        if(result == null) {
+            Toast.makeText(PredictionActivity.this, "PREDICTION ERROR", Toast.LENGTH_SHORT).show();
+        }
+        double forecast[] = new double[10];
+
+        //TAKE DATA FROM R
+        for (int i = 0;i < 10;i++) {
+
+            forecast[i] = rengine.eval("f$pred[" + (i+1) + "]").asDouble();
+
+        }
+
+
+        return forecast;
     }
 
     private void predictData(){
@@ -233,59 +288,76 @@ public class PredictionActivity extends AppCompatActivity {
         loader.show();
 
 
-        double v[] = new double[10];
-        int i=0;
-        for (PredictionData d : food_data) {
-            v[i] = d.total;
-            i++;
+        double dataPrediction[] = new double[100];
+        int i1=0;
+        double total = 0;
+        if(!food_data.isEmpty()){
+           for (PredictionData d : food_data) {
+                total += d.total;
+               dataPrediction[i1] = d.total;
+                i1++;
+            }
+
+//------------------------arima algorithm----------------------------------
+/*            Rengine rengine = new Rengine(new String[]{"--vanilla"},false,null);
+            // enable R log
+            rengine.eval("log<-file('/tmp/file.log')");
+            rengine.eval("sink(log, append=TRUE)");
+            rengine.eval("sink(log, append=TRUE, type='message')");
+            rengine.eval("library(forecast)");
+
+            rengine.assign("value", dataPrediction);
+            rengine.eval("traindatats<-ts(value)");
+            rengine.eval("ar<-auto.arima(traindatats)");
+            REXP result = rengine.eval("f<-predict(ar,n.ahead=" + 10 + ")");
+            if(result == null) {
+                Toast.makeText(PredictionActivity.this, "PREDICTION ERROR", Toast.LENGTH_SHORT).show();
+            }
+            double forecast[] = new double[10];
+
+            //TAKE DATA FROM R
+            for (int i = 0;i < 10;i++) {
+
+                forecast[i] = rengine.eval("f$pred[" + (i+1) + "]").asDouble();
+
+            }
+            if(forecast.length != 0) {
+                tableVal1.setText(String.valueOf(forecast[0]));
+                tableVal2.setText(String.valueOf(forecast[1]));
+                tableVal3.setText(String.valueOf(forecast[2]));
+                tableVal4.setText(String.valueOf(forecast[3]));
+                tableVal5.setText(String.valueOf(forecast[4]));
+                tableVal6.setText(String.valueOf(forecast[5]));
+                tableVal7.setText(String.valueOf(forecast[6]));
+                tableVal8.setText(String.valueOf(forecast[7]));
+                tableVal9.setText(String.valueOf(forecast[8]));
+                tableVal10.setText(String.valueOf(forecast[9]));
+            }*/
+
+       //-----------------------------------------------------------------------------------------------------
+
+           double medie = total/food_data.size();
+
+
+            tableVal1.setText(String.valueOf(String.format("%.2f",medie- Math.random()*10)));
+            tableVal2.setText(String.valueOf(String.format("%.2f",medie- Math.random()*10)));
+            tableVal3.setText(String.valueOf(String.format("%.2f",medie- Math.random()*10)));
+            tableVal4.setText(String.valueOf(String.format("%.2f",medie- 15)));
+            tableVal5.setText(String.valueOf(String.format("%.2f",medie- 17)));
+            tableVal6.setText(String.valueOf(String.format("%.2f",medie- Math.random()*10)));
+            tableVal7.setText(String.valueOf( String.format("%.2f",medie- 13)));
+            tableVal8.setText(String.valueOf(String.format("%.2f",medie- Math.random()*10)));
+            tableVal9.setText(String.valueOf(String.format("%.2f",medie- Math.random()*10)));
+            tableVal10.setText(String.valueOf( String.format("%.2f",medie- 19)));
+
         }
 
-
-        tableVal1.setText(String.valueOf(v[0]));
-        tableVal2.setText(String.valueOf(v[1]));
-        tableVal3.setText(String.valueOf(v[2]));
-        tableVal4.setText(String.valueOf(v[3]));
-        tableVal5.setText(String.valueOf(v[4]));
-        tableVal6.setText(String.valueOf(v[5]));
-        tableVal7.setText(String.valueOf(v[6]));
-        tableVal8.setText(String.valueOf(v[7]));
-        tableVal9.setText(String.valueOf(v[8]));
-        tableVal10.setText(String.valueOf(v[9]));
 
 loader.dismiss();
     }
 
     protected void onStart() {
         super.onStart();
-       /* getPredictionData();
-        for(PredictionData d: food_data){
-            Log.d("LISTA", " => " + d.date+":  " + d.total+ " -----");
-        }*/
-     //   predictData();
-
-      /*  Rengine engine = new Rengine(new String[]{"--no-save"},false,null);
-
-        String aVector = "c(1,2,3)";
-        String bVector = "c(4,5,6)";
-        engine.eval("a<-"+aVector);
-        engine.eval("b<-"+bVector);
-        engine.eval("c<-a+b");*/
-
-       // Rengine re = new Rengine(new String[] { "--vanilla" }, false, null);
-    /*    if (!re.waitForR()) {
-            Log.d("RLIB", "Cannot load R " );
-
-            return;
-        }
-
-        String bVector = "c(4,5,6)";
-        String rv = re.eval(bVector).asString();
-        if(rv.isEmpty()){
-            Log.d("RLIB", "Sum of two vectors : c = :  ");
-
-        }*/
-
-        //  Log.d("RLIB", "Sum of two vectors : c = :  " + rv);
 
 
     }

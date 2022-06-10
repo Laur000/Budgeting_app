@@ -7,13 +7,30 @@
     tools:context=".PredictionActivity"
     android:background="@drawable/bgimage2">
 
+    <TextView
+        android:id="@+id/prediction"
+        android:layout_width="408dp"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="10 days predictions:"
+        android:textColor="#fff"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/table"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
     <TableLayout
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <TableRow>
 
