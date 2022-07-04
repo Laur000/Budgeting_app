@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 //comment this for logind mereu
-        authStateListener = new FirebaseAuth.AuthStateListener() {
+      /*  authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = mAuth.getCurrentUser();
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             }
-        };
+        };*/
 //----------------------
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -106,13 +106,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 //comment this for logind mereu
-    @Override
+   /* @Override
     protected void onStart() {
         super.onStart();
 
         mAuth.addAuthStateListener(authStateListener);
 
-    }
+    }*/
     @Override
     protected void onStop() {
         super.onStop();

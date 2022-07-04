@@ -215,21 +215,6 @@ public class BudgetAnalyticsActivity extends AppCompatActivity {
         predictions[8] = (float) (medie - Math.random()*10);
         predictions[9] = (float) (medie - 19);
 
-
-
-        Log.d("DATE", "Lenght    " + dataPredict.length );
-        Log.d("DATE", "No such document:    " +predictions[0] );
-        Log.d("DATE", "No such document:    " +predictions[1] );
-        Log.d("DATE", "No such document:    " +predictions[2] );
-        Log.d("DATE", "No such document:    " +predictions[3] );
-        Log.d("DATE", "No such document:    " +predictions[4] );
-        Log.d("DATE", "No such document:    " +predictions[5] );
-        Log.d("DATE", "No such document:    " +predictions[6] );
-        Log.d("DATE", "No such document:    " +predictions[7] );
-        Log.d("DATE", "No such document:    " +predictions[8] );
-        Log.d("DATE", "No such document:    " +predictions[9] );
-
-
         return predictions;
 
 
